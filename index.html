@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo House& Art | Photography Portfolio</title>
+    
+    <title>Photo House & Art | Professional Photography Portfolio & Gallery</title>
+    <meta name="description" content="Explore Photo House & Art for minimalist, striking, and emotive photography. Specializing in nature landscapes, urban architecture, portraits, and wedding events. Book a session today.">
+    <meta name="keywords" content="photography portfolio, nature photography, portrait photographer, wedding photography, urban art, Photo House and Art">
+    <meta name="author" content="Photo House & Art">
+    
+    <meta property="og:title" content="Photo House & Art | Photography Portfolio">
+    <meta property="og:description" content="Explore the world through a minimalist and emotive lens. Discover professional nature, portrait, and wedding galleries.">
+    <meta property="og:type" content="website">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -15,6 +24,13 @@
     <header>
         <nav class="navbar">
             <a href="#" class="logo">Photo House & Art</a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#gallery">Gallery</a></li>
@@ -62,15 +78,15 @@
 
         <div class="gallery-grid">
             <div class="gallery-item" data-category="nature">
-                <img src="https://images.unsplash.com/photo-1426604966848-d7adacbd02bff?auto=format&fit=crop&w=800&q=80" alt="Mountain Landscape">
+                <img src="https://images.unsplash.com/photo-1426604966848-d7adacbd02bff?auto=format&fit=crop&w=800&q=80" alt="Misty Mountain Landscape">
                 <div class="overlay"><span>Misty Mountains</span></div>
             </div>
             <div class="gallery-item" data-category="urban">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="City Architecture">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="City Architecture and Urban Geometry">
                 <div class="overlay"><span>Urban Geometry</span></div>
             </div>
             <div class="gallery-item" data-category="portrait">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Portrait Photography">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Professional Studio Portrait Photography">
                 <div class="overlay"><span>Studio Portrait</span></div>
             </div>
         </div>
@@ -78,13 +94,13 @@
 
     <div id="lightbox" class="lightbox">
         <span class="close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
+        <img class="lightbox-content" id="lightbox-img" alt="Lightbox Preview">
         <div id="lightbox-caption"></div>
     </div>
 
     <section id="about" class="about-section">
         <div class="about-container">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Photographer">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Professional Photographer Behind the Lens">
             <div class="about-text">
                 <h2>Behind the Lens</h2>
                 <p>Hello! I'm a professional photographer specializing in capturing authentic human emotion, architectural lines, and the serenity of nature.</p>
@@ -105,18 +121,19 @@
 
     <footer>
         <div class="social-links" style="margin-bottom: 15px; display: flex; justify-content: center; gap: 20px;">
-            <a href="https://instagram.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-instagram"></i></a>
-            <a href="https://facebook.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-facebook"></i></a>
-            <a href="https://twitter.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-twitter"></i></a>
-            <a href="https://pinterest.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-pinterest"></i></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-twitter"></i></a>
+            <a href="https://pinterest.com" target="_blank" rel="noopener" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-pinterest"></i></a>
             <a href="https://wa.me/233000000000?text=Hello,%20I'm%20interested%20in%20booking%20a%20photography%20session!" 
-   class="whatsapp-float" 
-   target="_blank" 
-   title="Chat on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-</a>
+               class="whatsapp-float" 
+               target="_blank" 
+               rel="noopener"
+               title="Chat on WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
         </div>
-        <p>&copy; 2026 Aperture & Art. All Rights Reserved.</p>
+        <p>&copy; 2026 Photo House & Art. All Rights Reserved.</p>
     </footer>
 
     <script src="script.js"></script>

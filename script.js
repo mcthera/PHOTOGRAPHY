@@ -38,7 +38,7 @@ function updateGalleryListeners() {
         
         item._lightboxHandler = (e) => {
             // Prevent opening lightbox if the delete button was clicked
-            if (e.target.classList.contains('delete-btn')) return;
+            if (e.target.closest('.delete-btn')) return;
 
             const img = item.querySelector('img');
             const captionText = item.querySelector('.overlay span').innerText;
