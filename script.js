@@ -1,11 +1,11 @@
-// --- Check Admin Auth State on Page Load ---
+// --- Check Admin Auth State & Mobile Menu Setup on Page Load ---
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Admin Authentication Check
     const authNavLink = document.getElementById('auth-nav-link');
     const adminUploadSection = document.querySelector('.admin-upload-section');
     const isLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true';
 
     if (isLoggedIn) {
-        // Activate admin mode class on body to reveal delete buttons
         document.body.classList.add('admin-mode');
         
         if (adminUploadSection) adminUploadSection.classList.add('visible');
@@ -19,6 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.reload();
             });
         }
+    }
+
+    // 2. Mobile Hamburger Menu Toggle
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu automatically when any navigation link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
     }
 });
 
