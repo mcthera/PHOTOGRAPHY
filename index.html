@@ -18,6 +18,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -51,17 +55,17 @@
 
     <section class="admin-upload-section">
         <div class="admin-upload-card">
-            <h3>Admin Dashboard: Upload New Photo</h3>
+            <h3>Admin Dashboard: Add Photo URL</h3>
             <form id="upload-form">
                 <input type="text" id="photo-title" placeholder="Photo Title" required>
                 <select id="photo-category" required>
                     <option value="" disabled selected>Select Category</option>
                     <option value="nature">Nature</option>
-                    <option value="portrait">Portrait</option>
-                    <option value="urban">Urban</option>
+                    <option value="portrait">Portrait and other Events</option>
+                    <option value="urban">Wedding</option>
                 </select>
-                <input type="file" id="photo-file" accept="image/*" required>
-                <button type="submit" class="btn">Upload Photo</button>
+                <input type="url" id="photo-url" placeholder="Paste Direct Image URL (e.g., Unsplash link)" required>
+                <button type="submit" class="btn">Add to Database</button>
             </form>
         </div>
     </section>
@@ -77,19 +81,7 @@
         </div>
 
         <div class="gallery-grid">
-            <div class="gallery-item" data-category="nature">
-                <img src="https://images.unsplash.com/photo-1426604966848-d7adacbd02bff?auto=format&fit=crop&w=800&q=80" alt="Misty Mountain Landscape">
-                <div class="overlay"><span>Misty Mountains</span></div>
             </div>
-            <div class="gallery-item" data-category="urban">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="City Architecture and Urban Geometry">
-                <div class="overlay"><span>Urban Geometry</span></div>
-            </div>
-            <div class="gallery-item" data-category="portrait">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Professional Studio Portrait Photography">
-                <div class="overlay"><span>Studio Portrait</span></div>
-            </div>
-        </div>
     </section>
 
     <div id="lightbox" class="lightbox">

@@ -1,14 +1,35 @@
-// --- Check Admin Auth State & Mobile Menu Setup on Page Load ---
+// ==========================================
+// 1. FIREBASE INITIALIZATION (`edna-gallery`)
+// ==========================================
+const firebaseConfig = {
+    apiKey: "AIzaSyBcHe1cyKD2kTERXzgAV9Eyoq4B6z0LWW4",
+    authDomain: "edna-gallery.firebaseapp.com",
+    projectId: "edna-gallery",
+    storageBucket: "edna-gallery.firebasestorage.app",
+    messagingSenderId: "295843509001",
+    appId: "1:295843509001:web:1fbeeae4a51b73f5a419d8",
+    measurementId: "G-42SJ3X8R2R"
+};
+
+// Initialize Firebase App & Firestore Database
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.firestore();
+
+
+// ==========================================
+// 2. DOM CONTENT LOADED & AUTH STATE
+// ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Admin Authentication Check
     const authNavLink = document.getElementById('auth-nav-link');
     const adminUploadSection = document.querySelector('.admin-upload-section');
     const isLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true';
 
     if (isLoggedIn) {
         document.body.classList.add('admin-mode');
-        
         if (adminUploadSection) adminUploadSection.classList.add('visible');
+        
         if (authNavLink) {
             authNavLink.textContent = 'Logout';
             authNavLink.href = '#';
@@ -21,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Mobile Hamburger Menu Toggle
+    // Mobile Hamburger Menu Toggle
     const mobileMenu = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
 
@@ -31,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('active');
         });
 
-        // Close mobile menu automatically when any navigation link is clicked
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('active');
@@ -39,9 +59,56 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Load gallery dynamically from Firestore Database
+    loadGalleryFromFirestore();
 });
 
-// --- Gallery Filtering & Listeners ---
+
+// ==========================================
+// 3. FETCH & RENDER GALLERY FROM FIRESTORE
+// ==========================================
+async function loadGalleryFromFirestore() {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    if (!galleryGrid) return;
+
+    try {
+        const querySnapshot = await db.collection("photos").orderBy("createdAt", "desc").get();
+        
+        galleryGrid.innerHTML = ''; // Clear default static elements to pull cleanly from DB
+
+        querySnapshot.forEach((docSnapshot) => {
+            const photoData = docSnapshot.data();
+            appendPhotoToDOM(docSnapshot.id, photoData.title, photoData.category, photoData.imageUrl);
+        });
+
+        updateGalleryListeners();
+    } catch (error) {
+        console.error("Error loading gallery from Firestore:", error);
+    }
+}
+
+function appendPhotoToDOM(id, title, category, imageUrl) {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    
+    const newItem = document.createElement('div');
+    newItem.classList.add('gallery-item');
+    newItem.setAttribute('data-category', category);
+    newItem.setAttribute('data-id', id);
+
+    newItem.innerHTML = `
+        <button class="delete-btn" data-id="${id}"><i class="fas fa-trash"></i></button>
+        <img src="${imageUrl}" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80'">
+        <div class="overlay"><span>${title}</span></div>
+    `;
+
+    galleryGrid.appendChild(newItem);
+}
+
+
+// ==========================================
+// 4. GALLERY LISTENERS, LIGHTBOX & DELETE
+// ==========================================
 const filterButtons = document.querySelectorAll('.filter-btn');
 
 function updateGalleryListeners() {
@@ -52,11 +119,9 @@ function updateGalleryListeners() {
     const closeBtn = document.querySelector('.close');
 
     galleryItems.forEach(item => {
-        // Prevent duplicate event binding
         item.removeEventListener('click', item._lightboxHandler);
         
         item._lightboxHandler = (e) => {
-            // Prevent opening lightbox if the delete button was clicked
             if (e.target.closest('.delete-btn')) return;
 
             const img = item.querySelector('img');
@@ -69,13 +134,23 @@ function updateGalleryListeners() {
         
         item.addEventListener('click', item._lightboxHandler);
 
-        // --- Handle Delete Functionality ---
+        // --- Handle Delete Functionality from Firestore ---
         const deleteBtn = item.querySelector('.delete-btn');
         if (deleteBtn) {
-            deleteBtn.onclick = (e) => {
-                e.stopPropagation(); // Stop lightbox from triggering
-                if (confirm('Are you sure you want to delete this picture?')) {
-                    item.remove();
+            deleteBtn.onclick = async (e) => {
+                e.stopPropagation();
+                if (confirm('Are you sure you want to delete this picture record?')) {
+                    const docId = deleteBtn.getAttribute('data-id');
+                    try {
+                        if (docId) {
+                            await db.collection("photos").doc(docId).delete();
+                        }
+                        item.remove();
+                        alert('Photo deleted successfully!');
+                    } catch (error) {
+                        console.error("Error deleting document from Firestore:", error);
+                        alert('Failed to delete photo record.');
+                    }
                 }
             };
         }
@@ -94,18 +169,7 @@ function updateGalleryListeners() {
     }
 }
 
-// Ensure default gallery items have delete buttons built-in if you want them deletable too
-document.querySelectorAll('.gallery-item').forEach(item => {
-    if (!item.querySelector('.delete-btn')) {
-        const delBtn = document.createElement('button');
-        delBtn.classList.add('delete-btn');
-        delBtn.innerHTML = '<i class="fas fa-trash"></i>';
-        item.appendChild(delBtn);
-    }
-});
-
-updateGalleryListeners();
-
+// Filter button logic
 filterButtons.forEach(button => {
     button.addEventListener('click', () => {
         filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -124,52 +188,49 @@ filterButtons.forEach(button => {
     });
 });
 
-// --- Admin Image Upload Functionality ---
+
+// ==========================================
+// 5. ADMIN IMAGE URL SUBMISSION TO FIRESTORE
+// ==========================================
 const uploadForm = document.getElementById('upload-form');
-const galleryGrid = document.querySelector('.gallery-grid');
 
 if (uploadForm) {
-    uploadForm.addEventListener('submit', (e) => {
+    uploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const titleInput = document.getElementById('photo-title');
         const categorySelect = document.getElementById('photo-category');
-        const fileInput = document.getElementById('photo-file');
+        const urlInput = document.getElementById('photo-url');
 
-        const file = fileInput.files[0];
-        if (!file) return;
+        const imageUrl = urlInput.value.trim();
+        if (!imageUrl) return;
 
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const imageUrl = event.target.result;
+        try {
+            // Save metadata and image URL directly to Firestore database
+            const docRef = await db.collection("photos").add({
+                title: titleInput.value,
+                category: categorySelect.value,
+                imageUrl: imageUrl,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
 
-            const newItem = document.createElement('div');
-            newItem.classList.add('gallery-item');
-            newItem.setAttribute('data-category', categorySelect.value);
-
-            newItem.innerHTML = `
-                <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                <img src="${imageUrl}" alt="${titleInput.value}">
-                <div class="overlay"><span>${titleInput.value}</span></div>
-            `;
-
-            galleryGrid.appendChild(newItem);
-
-            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-            if (activeFilter !== 'all' && activeFilter !== categorySelect.value) {
-                newItem.style.display = 'none';
-            }
-
+            // Append instantly to the DOM
+            appendPhotoToDOM(docRef.id, titleInput.value, categorySelect.value, imageUrl);
             updateGalleryListeners();
-            uploadForm.reset();
-            alert('Photo uploaded successfully!');
-        };
 
-        reader.readAsDataURL(file);
+            uploadForm.reset();
+            alert('Photo URL added to Firestore successfully!');
+        } catch (error) {
+            console.error("Error adding document:", error);
+            alert('Failed to save photo URL. Check console for details.');
+        }
     });
 }
 
-// --- Contact Form Submission Handler ---
+
+// ==========================================
+// 6. CONTACT FORM SUBMISSION HANDLER
+// ==========================================
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
