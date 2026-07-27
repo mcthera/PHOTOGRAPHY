@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Aperture & Art</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #121212;">
+
+    <div class="login-card" style="background: #1e1e1e; padding: 40px; border-radius: 8px; width: 100%; max-width: 400px; border: 1px solid #333;">
+        <h2 style="color: #fff; text-align: center; margin-bottom: 25px;">Admin Login</h2>
+        
+        <form id="login-form" style="display: flex; flex-direction: column; gap: 20px;">
+            <div>
+                <label style="color: #a0a0a0; font-size: 0.9rem; display: block; margin-bottom: 5px;">Phone Number</label>
+                <input type="tel" id="admin-phone" placeholder="Enter phone number" required style="width: 100%; padding: 12px; background: #121212; border: 1px solid #333; color: #fff; border-radius: 4px;">
+            </div>
+            
+            <div>
+                <label style="color: #a0a0a0; font-size: 0.9rem; display: block; margin-bottom: 5px;">Password</label>
+                <input type="password" id="admin-password" placeholder="Enter password" required style="width: 100%; padding: 12px; background: #121212; border: 1px solid #333; color: #fff; border-radius: 4px;">
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Login</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html" style="color: #888; text-decoration: none; font-size: 0.9kt;">&larr; Back to Website</a>
+        </div>
+    </div>
+
+    <script>
+        // Preset admin credentials
+        const ADMIN_PHONE = "0554";
+        const ADMIN_PASSWORD = "MAK";
+
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const phoneInput = document.getElementById('admin-phone').value.trim();
+            const passwordInput = document.getElementById('admin-password').value;
+
+            if (phoneInput === ADMIN_PHONE && passwordInput === ADMIN_PASSWORD) {
+                // Set login session storage flag
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                alert('Login successful! Redirecting to website...');
+                // Redirect back to main website
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid phone number or password.');
+            }
+        });
+    </script>
+</body>
+</html>

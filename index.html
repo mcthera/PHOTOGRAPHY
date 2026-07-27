@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo House& Art | Photography Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">Photo House & Art</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="login.html" id="auth-nav-link" class="admin-link">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Capturing Moments, Telling Stories</h1>
+            <p>Explore the world through my lens. Minimalist, striking, and emotive photography.</p>
+            <a href="#gallery" class="btn">View Gallery</a>
+        </div>
+    </section>
+
+    <section class="admin-upload-section">
+        <div class="admin-upload-card">
+            <h3>Admin Dashboard: Upload New Photo</h3>
+            <form id="upload-form">
+                <input type="text" id="photo-title" placeholder="Photo Title" required>
+                <select id="photo-category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="nature">Nature</option>
+                    <option value="portrait">Portrait</option>
+                    <option value="urban">Urban</option>
+                </select>
+                <input type="file" id="photo-file" accept="image/*" required>
+                <button type="submit" class="btn">Upload Photo</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+        <h2>Featured Work</h2>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="nature">Nature</button>
+            <button class="filter-btn" data-filter="portrait">Portrait and other Events</button>
+            <button class="filter-btn" data-filter="urban">Wedding</button>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item" data-category="nature">
+                <img src="https://images.unsplash.com/photo-1426604966848-d7adacbd02bff?auto=format&fit=crop&w=800&q=80" alt="Mountain Landscape">
+                <div class="overlay"><span>Misty Mountains</span></div>
+            </div>
+            <div class="gallery-item" data-category="urban">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="City Architecture">
+                <div class="overlay"><span>Urban Geometry</span></div>
+            </div>
+            <div class="gallery-item" data-category="portrait">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Portrait Photography">
+                <div class="overlay"><span>Studio Portrait</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="Photographer">
+            <div class="about-text">
+                <h2>Behind the Lens</h2>
+                <p>Hello! I'm a professional photographer specializing in capturing authentic human emotion, architectural lines, and the serenity of nature.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2>Get in Touch</h2>
+        <p>Want to book a session or collaborate? Send a message below.</p>
+        <form id="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="social-links" style="margin-bottom: 15px; display: flex; justify-content: center; gap: 20px;">
+            <a href="https://instagram.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-twitter"></i></a>
+            <a href="https://pinterest.com" target="_blank" style="color: #a0a0a0; font-size: 1.2rem; transition: color 0.3s;"><i class="fab fa-pinterest"></i></a>
+            <a href="https://wa.me/233000000000?text=Hello,%20I'm%20interested%20in%20booking%20a%20photography%20session!" 
+   class="whatsapp-float" 
+   target="_blank" 
+   title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+        </div>
+        <p>&copy; 2026 Aperture & Art. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
